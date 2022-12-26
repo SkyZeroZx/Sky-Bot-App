@@ -1,0 +1,11 @@
+version: '2.5'
+services:
+  skybotapp:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: sky-bot-app
+    container_name: sky-bot-app
+    restart: always # reiniciar el contenedor si se detiene
+    ports:
+      - "7575:80"

@@ -1,0 +1,136 @@
+<div bsModal class="modal fade" #modalUpdateStudent="bs-modal" [config]="{backdrop: 'static'}" (onHidden)="onHidden()"
+    tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h4>Nuevo Estudiante</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="modalUpdateStudent.hide()">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <form [formGroup]="updateStudentForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" placeholder="Email" class="form-control" formControlName="email"
+                                    maxlength="120">
+                                <div
+                                    *ngIf="updateStudentForm.controls.email.invalid && updateStudentForm.controls.email.touched">
+                                    <small id="required-email" class="text-left"
+                                        *ngIf="updateStudentForm.controls.email.errors?.required">
+                                        Se requiere email</small>
+                                    <small id="invalid-pattern-email" class="text-left"
+                                        *ngIf="updateStudentForm.controls.email.errors?.email">
+                                        El email ingresado tiene formato invalido</small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Nombres</label>
+                                <input type="text" placeholder="Nombres" class="form-control" formControlName="name"
+                                    oninput="alpha(this)" maxlength="80">
+                                <div
+                                    *ngIf="updateStudentForm.controls.name.invalid && updateStudentForm.controls.name.touched">
+                                    <small id="required-name" class="text-left"
+                                        *ngIf="updateStudentForm.controls.name.errors?.required">
+                                        Se requiere ingresar nombres</small>
+                                    <small id="patter-name" class="text-left"
+                                        *ngIf="updateStudentForm.controls.name.errors?.pattern">
+                                        El nombre ingresado tiene formato invalido</small>
+                                    <small id="minlength-name" class="text-left"
+                                        *ngIf="updateStudentForm.controls.name.errors?.minlength">
+                                        La longitud minima del nombre es de 2 caracteres</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="lastName" class="col-form-label">Apellidos</label>
+                                <input type="text" placeholder="Apellidos" class="form-control"
+                                    formControlName="lastName" oninput="alpha(this)" maxlength="120">
+                                <div
+                                    *ngIf="updateStudentForm.controls.lastName.invalid && updateStudentForm.controls.lastName.touched">
+                                    <small id="required-lastname" class="text-left"
+                                        *ngIf="updateStudentForm.controls.lastName.errors?.required">
+                                        Se requiere ingresar apellido</small>
+                                    <small id="minlength-lastname" class="text-left"
+                                        *ngIf="updateStudentForm.controls.lastName.errors?.minlength">
+                                        La longitud minima del apellido es de 2 caracteres</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="col-form-label">Celular</label>
+                                <input type="text" class="form-control" formControlName="phone" maxlength="9"
+                                    oninput="process(this)" placeholder="Celular" />
+                                <div
+                                    *ngIf="updateStudentForm.controls.phone.invalid && updateStudentForm.controls.phone.touched">
+                                    <small id="required-phone" class="text-left"
+                                        *ngIf="updateStudentForm.controls.phone.errors?.required">
+                                        Se requiere ingresar celular <br /></small>
+                                    <small id="minlengt-phone" class="text-left"
+                                        *ngIf="updateStudentForm.controls.phone.errors?.minlength">
+                                        La longitud minima del celular es de 9 caracteres</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="label-dni" class="col-form-label">DNI</label>
+                                <input type="text" class="form-control" formControlName="dni" maxlength="8"
+                                    placeholder="DNI" oninput="process(this)" placeholder="DNI" />
+                                <div
+                                    *ngIf="updateStudentForm.controls.dni.invalid && updateStudentForm.controls.dni.touched">
+                                    <small id="required-dni" class="text-left"
+                                        *ngIf="updateStudentForm.controls.dni.errors?.required">
+                                        Se requiere ingresar dni <br /></small>
+                                    <small id="minlengt-dni" class="text-left"
+                                        *ngIf="updateStudentForm.controls.dni.errors?.minlength">
+                                        La longitud minima del dni es de 8 caracteres</small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="label-dni" class="col-form-label">Caracter Validacion DNI</label>
+                                <input type="text" class="form-control" formControlName="caracterValidation" maxlength="1" oninput="process(this)" 
+                                    placeholder="Caracter Validacion DNI" />
+                                <div
+                                    *ngIf="updateStudentForm.controls.caracterValidation.invalid && updateStudentForm.controls.caracterValidation.touched">
+                                    <small id="required-dni" class="text-left"
+                                        *ngIf="updateStudentForm.controls.caracterValidation.errors?.required">
+                                        Se requiere ingresar caracter validacion <br /></small>
+                                    <small id="required-dni" class="text-left"
+                                        *ngIf="updateStudentForm.controls.caracterValidation.errors?.maxlength">
+                                        Se requiere ingresar caracter validacion longitud maxima es 1 <br /></small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-update-student" (click)="updateStudent()" class="btn btn-primary"
+                        [disabled]="updateStudentForm.invalid">Actualizar Estudiante</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+a {
+  color: #5e72e4 !important;
+}
+.actions {
+  height: 52px !important;
+  @media (max-width: 1561px) {
+    height: 62px !important;
+  }
+}
+
+i {
+  font-size: 1.5em !important;
+}
+
+.mat-elevation-z8 {
+  z-index: 1 !important;
+  padding: 12px;
+}

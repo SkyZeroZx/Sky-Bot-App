@@ -1,0 +1,50 @@
+<div class="content">
+    <div class="card shadow" [formGroup]="chartsForm">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa-solid fa-calendar"></i>
+                            </div>
+                        </div>
+                        <input type="text" placeholder="Fechas" class="form-control" bsDaterangepicker readonly 
+                            [maxDate]="maxDate" formControlName="dateRange">
+                    </div>
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <ng-select placeholder="Seleccionar Documento" [items]="listDocuments" [closeOnSelect]="true" bindLabel="name" 
+                        style="width:  400px !important;"
+                            [hideSelected]="true" bindValue="idDocument" formControlName="id"
+                            id="document-select"></ng-select>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <app-dashboard-cards [statusListChartReport]="statusListChartReport"> </app-dashboard-cards>
+
+    <app-dashboard-bar [statusListChartReport]="statusListChartReport"></app-dashboard-bar>
+
+
+
+    <div class=" row">
+        <div class="col-lg-6">
+            <app-dashboard-pie [statusListChartReport]="statusListChartReport"> </app-dashboard-pie>
+        </div>
+        <div class=" col-lg-6">
+            <app-dashboard-polar [statusListChartReport]="statusListChartReport"></app-dashboard-polar>
+        </div>
+    </div>
+
+
+    <app-dashboard-linear [statusListChartReport]="statusListChartReport"></app-dashboard-linear>
+
+</div>

@@ -1,0 +1,16 @@
+.mat-elevation-z8 {
+  z-index: 1 !important;
+  padding: 12px;
+}
+
+.actions {
+  height: 52.5px !important;
+  @media (max-width: 1561px) {
+    height: 62.5px !important;
+  }
+}
+
+i {
+  font-size: 1.5em !important;
+  margin-right: 1em;
+}

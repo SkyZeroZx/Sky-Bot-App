@@ -1,0 +1,52 @@
+@import './assets/custom-styles/general.scss';
+
+@import './assets/custom-styles/dark-theme.scss';
+
+swal {
+  display: none !important;
+}
+
+// @import './assets/custom-styles/material/custom-theme-material.scss';
+
+mat-paginator {
+  border-radius: 3px;
+}
+
+@import './app/core/directives/mat-table-responsive/mat-table-responsive.directive.scss';
+
+// .mat-calendar{
+
+//   background-color: #272a3c !important;
+[class*='mat-calendar-'] {
+  //background-color: #272a3c !important;
+  outline: none !important;
+}
+
+// }
+
+.mat-calendar {
+  font-family: 'Poppins' !important;
+  //background-color: #272a3c !important;
+}
+
+mat-datepicker-toggle {
+  outline: none !important;
+}
+.mat-mdc-focus-indicator {
+  outline: none !important;
+}
+
+.mat-ripple.mat-mdc-button-ripple {
+  outline: none !important;
+}
+.mat-mdc-button-touch-target {
+  outline: none !important;
+}
+
+.mat-mdc-button-persistent-ripple{
+  outline: none !important;
+}
+
+.mdc-icon-button{
+  outline: none !important;
+}

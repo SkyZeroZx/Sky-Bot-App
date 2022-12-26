@@ -1,0 +1,112 @@
+@use '@angular/material' as mat;
+
+
+// below defines your custom color to build a theme palette from
+$darkblue: (
+  50: #3e76df,
+  100: #3e76df,
+  200: #3e76df,
+  300: #3e76df,
+  400: #3e76df,
+  500: #3e76df,
+  600: #3e76df,
+  700: #3e76df,
+  800: #4255d9,
+  900: #3142d1,
+  A100: #3142d1,
+  A200: #3142d1,
+  A400: #3142d1,
+  A700: #3142d1,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #3142d1,
+    600: #3142d1,
+    700: #3142d1,
+    800: #3142d1,
+    900: #3142d1,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$custom-typography: mat.define-typography-config(
+  $font-family: 'Poppins',
+);
+
+@include mat.core();
+
+$angular-primary: mat.define-palette($darkblue, 100);
+$angular-accent: mat.define-palette($darkblue, A100);
+
+$angular-warn: mat.define-palette(mat.$red-palette);
+
+$angular-default-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
+    typography: $custom-typography,
+  )
+);
+
+@include mat.all-component-themes($angular-default-theme);
+
+$angular-dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
+    typography: $custom-typography,
+  )
+);
+
+.dark-content {
+  // Fixed Background  Switch Toggle
+  .mdc-switch__ripple {
+    background-color: transparent !important;
+  }
+  .mat-ripple.mat-mdc-slide-toggle-ripple.mat-mdc-focus-indicator {
+    background-color: transparent !important;
+  }
+  .mat-ripple.mat-mdc-option-ripple {
+    background-color: transparent !important;
+  }
+
+  [class*='mat-mdc-'] {
+    background-color: #272a3c !important;
+  }
+
+  .mat-ripple.mat-mdc-option-ripple {
+    background-color: transparent !important;
+  }
+
+  // Fixed next & previous button paginator material
+  .mat-mdc-button-persistent-ripple {
+    background-color: transparent !important;
+  }
+  .mat-mdc-slide-toggle .mdc-switch .mdc-switch__handle::before {
+    background: transparent !important;
+  }
+  .mat-ripple.mat-mdc-button-ripple {
+    background: transparent !important;
+  }
+
+  .mat-mdc-focus-indicator {
+    background: transparent !important;
+  }
+
+  .mat-mdc-button-touch-target {
+    background: transparent !important;
+  }
+  @include mat.all-component-colors($angular-dark-theme);
+}

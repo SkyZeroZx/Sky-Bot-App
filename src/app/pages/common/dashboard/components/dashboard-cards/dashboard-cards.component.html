@@ -1,0 +1,82 @@
+<div class="row align-items-center">
+
+    <div class="col-xl-3 col-lg-6">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Observados</h5>
+                        <span id="card-total-on-time"
+                            class="h2 font-weight-bold mb-0 text-card-total">{{cardsStatus.totalObserved}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape">
+                            <i class="fa-solid fa-file-circle-xmark  fa-2xl  text-observed-states"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Procesando</h5>
+                        <span id="card-total-later"
+                            class="h2 font-weight-bold mb-0 text-card-total">{{cardsStatus.totalProcessing}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape">
+                            <i class="fa-solid fa-file-circle-question fa-2xl  text-processing-states"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-lg-6">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Finalizado</h5>
+                        <span id="card-total-licence"
+                            class="h2 font-weight-bold mb-0 text-card-total ">{{cardsStatus.totalFinalized}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape icon-licence">
+                            <i class="fa-solid fa-file-circle-check fa-2xl text-finalized-states"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="col-xl-3 col-lg-6">
+        <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Registrados </h5>
+                        <span id="card-total-absent"
+                            class="h2 font-weight-bold mb-0 text-card-total">{{cardsStatus.totalRegister}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon icon-shape icon-licence">
+                            <i class="fa-solid fa-file fa-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br>

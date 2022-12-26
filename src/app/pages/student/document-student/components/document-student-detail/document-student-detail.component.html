@@ -1,0 +1,32 @@
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <br><br><br><br><br>
+            <div class="row multi-steps-wrap">
+                <ul class="list-unstyled multi-steps">
+                    <li class="job-status job-created"
+                        [ngClass]="{'job-inprogress is-active register': status =='register'}">
+                        REGISTRADO
+                    </li>
+                    <li class="job-status"
+                        [ngClass]="{'job-inprogress is-active processing':    status== 'processing'}">
+                        PROCESANDO</li>
+                    <li class="job-status job-completed " *ngIf="status == 'observed'"
+                        [ngClass]="{'job-inprogress is-active observed': status == 'observed'}">
+                        OBSERVADO
+                    </li>
+                    <li class="job-status job-closed"
+                        [ngClass]="{'job-inprogress is-active finalized': status== 'finalized'}">
+                        FINALIZADO
+                    </li>
+                </ul>
+            </div>
+            <br>
+
+            <app-status-document-tab [statusDocument]="statusDocument" [listAttachment]="listAttachment"
+                [listCertificate]="listCertificate"></app-status-document-tab>
+
+
+        </div>
+    </div>
+</div>

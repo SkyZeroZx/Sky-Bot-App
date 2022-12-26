@@ -1,0 +1,130 @@
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 12px 14px;
+  font-size: 1.25em;
+  width: 8.5em;
+  cursor: pointer;
+}
+
+.linkedin {
+  margin-right: 2em !important;
+}
+
+.filter-blue {
+  filter: invert(45%) sepia(89%) saturate(2651%) hue-rotate(214deg) brightness(94%)
+    contrast(90%);
+}
+
+.linkedin:hover {
+  i,
+  p {
+    color: #5e72e4 !important;
+    border-color: #5e72e4;
+  }
+}
+
+.github:hover {
+  i,
+  p {
+    color: #5e72e4 !important;
+    border-color: #5e72e4;
+  }
+}
+
+.info {
+  border-color: #5e72e4;
+  color: #5e72e4;
+}
+
+.info:hover {
+  background: #5e72e4 !important;
+  color: white;
+}
+
+.info:active {
+  background: #5e72e4 !important;
+  color: white;
+}
+
+.info:focus {
+  background: #5e72e4 !important;
+  color: white;
+}
+
+button {
+  background: transparent !important;
+}
+
+button:hover {
+  background: transparent !important;
+}
+
+#landing-text {
+  margin-right: 4em !important;
+  margin-left: 4em !important;
+}
+
+.animation {
+  margin-right: 4em !important;
+  margin-left: 4em !important;
+}
+
+@media (max-width: 768px) {
+  #landing-text {
+    margin-left: none !important;
+    margin-left: none !important;
+    margin-top: 1.25em;
+  }
+
+  .animation {
+    margin-left: none !important;
+    margin-left: none !important;
+  }
+}
+
+a {
+  color: #5e72e4;
+}
+
+.rotateIn {
+  -webkit-animation-name: rotateIn;
+  animation-name: rotateIn;
+}
+
+@-webkit-keyframes rotateIn {
+  from {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate3d(0, 0, 1, -200deg);
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: rotate3d(0, 0, 1, -200deg);
+    transform: rotate3d(0, 0, 1, -200deg);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform-origin: center;
+    transform-origin: center;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}

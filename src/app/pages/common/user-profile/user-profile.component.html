@@ -1,0 +1,140 @@
+<div class="content">
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card card-user">
+        <div class=" card-body">
+          <p class=" card-text"></p>
+          <div class=" author">
+            <div class=" block block-one"></div>
+            <div class=" block block-two"></div>
+            <div class=" block block-three"></div>
+            <div class=" block block-four"></div>
+            <app-user-photo [inputUserPhoto]="photoUser">
+            </app-user-photo>
+            <p id="full-name">
+              {{userProfileForm.value.name + " " + userProfileForm.value.fatherLastName + " " +
+              userProfileForm.value.motherLastName }}
+            </p>
+            <h5 id="options"> Opciones</h5>
+            <app-user-options></app-user-options>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header  mt-3">
+          <h5 class="title" id="title-my-profile">Mi Perfil</h5>
+        </div>
+        <div class=" card-body">
+          <form [formGroup]="userProfileForm">
+            <div class=" row">
+              <div class=" col-md-4 pr-md-1">
+                <div class=" form-group">
+                  <label>UserName</label>
+                  <input class=" form-control" readonly placeholder="User" type="text" formControlName="username" />
+                </div>
+              </div>
+              <div class=" col-md-2 pl-md-1">
+                <div class=" form-group">
+                  <label> Actualizado </label>
+                  <input class=" form-control" type="text" readonly formControlName="updateAt" />
+                </div>
+              </div>
+              <div class=" col-md-3 pl-md-1">
+                <div class=" form-group">
+                  <label> DNI </label>
+                  <input class=" form-control" type="text" readonly formControlName="dni" />
+                </div>
+              </div>
+
+              <div class=" col-md-3 pl-md-1">
+                <div class=" form-group">
+                  <label> Rol </label>
+                  <input class=" form-control" type="text" readonly formControlName="role" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 pr-md-1">
+                <div class=" form-group">
+                  <label> Nombre </label>
+                  <input class="form-control" placeholder="Nombre" type="text" formControlName="name" maxlength="120" />
+                  <div *ngIf="userProfileForm.controls.name.invalid && userProfileForm.controls.name.touched">
+                    <small id="required-name" class="text-left" *ngIf="userProfileForm.controls.name.errors?.required">
+                      Se requiere ingresar nombres</small>
+                    <small id="format-name" class="text-left" *ngIf="userProfileForm.controls.name.errors?.pattern">
+                      El nombre ingresado tiene formato invalido</small><br />
+                    <small id="min-name" class="text-left" *ngIf="userProfileForm.controls.name.errors?.minlength">
+                      La longitud minima del nombre es de 2 caracteres</small>
+                  </div>
+                </div>
+              </div>
+              <div class=" col-md-4 pr-md-1">
+                <div class=" form-group">
+                  <label> Apellido Paterno </label>
+                  <input class=" form-control" placeholder="Apellido Paterno" type="text"
+                    formControlName="fatherLastName" maxlength="120" />
+                  <div
+                    *ngIf="userProfileForm.controls.fatherLastName.invalid && userProfileForm.controls.fatherLastName.touched">
+                    <small id="required-father-lastname" class="text-left"
+                      *ngIf="userProfileForm.controls.fatherLastName.errors?.required">
+                      Se requiere ingresar apellido paterno</small>
+                    <small id="format-father-lastname" class="text-left"
+                      *ngIf="userProfileForm.controls.fatherLastName.errors?.pattern">
+                      El apellido paterno ingresado tiene formato invalido</small><br />
+                    <small id="min-father-lastname" class="text-left"
+                      *ngIf="userProfileForm.controls.fatherLastName.errors?.minlength">
+                      La longitud minima del apellido paterno es de 2 caracteres</small>
+                  </div>
+                </div>
+              </div>
+              <div class=" col-md-4 pl-md-1">
+                <div class=" form-group">
+                  <label> Apellido Materno </label>
+                  <input class=" form-control" placeholder="Apellido Materno" type="text"
+                    formControlName="motherLastName" maxlength="120" />
+                  <div
+                    *ngIf="userProfileForm.controls.motherLastName.invalid && userProfileForm.controls.motherLastName.touched">
+                    <small id="required-mother-lastname" class="text-left"
+                      *ngIf="userProfileForm.controls.motherLastName.errors?.required">
+                      Se requiere ingresar apellido materno</small>
+                    <small id="format-mother-lastname" class="text-left"
+                      *ngIf="userProfileForm.controls.motherLastName.errors?.pattern">
+                      El apellido materno ingresado tiene formato invalido</small><br />
+                    <small id="min-mother-lastname" class="text-left"
+                      *ngIf="userProfileForm.controls.motherLastName.errors?.minlength">
+                      La longitud minima del apellido paterno es de 2 caracteres</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer ml-4">
+          <button class="btn info" [disabled]="userProfileForm.invalid" id="btn-update-profile"
+            (click)="updateProfile()">Actualizar</button>
+        </div>
+      </div>
+
+      <div class=" card">
+        <div class="card-header mt-3">
+          <h5 class="title" id="title-danger-zone">Danger Zone</h5>
+        </div>
+        <div class="card-body  ml-4">
+          <div class=" row">
+            <div class=" col-md-5 pr-md-1">
+              <div class=" form-group">
+                <button type="button" class="btn outline danger" id="btn-logout" (click)="logOut()"> <i
+                    class="tim-icons  icon-button-power"></i> &nbsp;&nbsp;
+                  Logout</button>
+              </div>
+              <div class=" form-group">
+                <button type="button" class="btn outline danger" id="btn-change-password" (click)="changePassword()">
+                  <i class="tim-icons  icon-key-25"></i> &nbsp;&nbsp; Cambiar
+                  Contraseña</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

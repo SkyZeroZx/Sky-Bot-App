@@ -1,0 +1,83 @@
+<div class="content">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <button class="btn info" id="btn-back" [routerLink]="['/status-document']"> <i
+                            class="fa-solid fa-backward"></i></button> <br><br>
+                    <div class="d-flex justify-content-center">
+                        <div class="p-2">
+                            <h3 id="title" class="mb-0">Detalle Tramite {{statusDocumentByStudent?.idStatusDocument}}
+                            </h3>
+                        </div>
+                    </div>
+
+
+                    <div class="row d-flex justify-content-center">
+                        <div class=" col-md-4">
+                            <div class=" form-group">
+                                <label>Nombre</label>
+                                <input class=" form-control" readonly type="text"
+                                    [value]="statusDocumentByStudent?.studentName" />
+                            </div>
+                        </div>
+                        <div class=" col-md-4">
+                            <div class=" form-group">
+                                <label> Apellidos </label>
+                                <input class=" form-control" readonly type="text"
+                                    [value]="statusDocumentByStudent?.studentLastName" />
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row d-flex justify-content-center">
+                        <div class=" col-md-4">
+                            <div class=" form-group">
+                                <label> Codigo Estudiante </label>
+                                <input class=" form-control" type="text" readonly
+                                    [value]="statusDocumentByStudent?.idStudent" />
+                            </div>
+                        </div>
+
+                        <div class=" col-md-4">
+                            <div class=" form-group">
+                                <label> Tipo </label>
+                                <input class=" form-control" type="text" readonly
+                                    [value]="statusDocumentByStudent?.documentName" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="pr-5 pl-5 pt-2">
+                            <button id="btn-new-status" type="button" class="btn info"
+                                (click)="showModalCreateStatus()">
+                                <a><i class="fa-solid fa-file" aria-hidden="true"></i>
+                                    Nuevo Estado</a>
+                            </button>
+                        </div>
+
+                        <div class="pr-5 pl-5 pt-2">
+                            <app-create-certificate
+                                [statusDocumentByStudent]="statusDocumentByStudent"></app-create-certificate>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+            </div>
+
+            <app-status-document-tab [statusDocument]="statusDocument" [listAttachment]="listAttachment"
+                (update)="getRouteParams()" [listCertificate]="listCertificate"></app-status-document-tab>
+
+
+        </div>
+    </div>
+</div>
+
+
+<app-create-status *ngIf="showCreateStatus" (close)="showCreateStatus=false"
+    (update)="showCreateStatus=false; getRouteParams()"
+    [statusDocumentByStudent]="statusDocumentByStudent"></app-create-status>

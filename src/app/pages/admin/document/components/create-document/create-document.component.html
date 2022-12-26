@@ -1,0 +1,55 @@
+<div bsModal class="modal fade" #modalCreateDocument="bs-modal" [config]="{backdrop: 'static'}" (onHidden)="onHidden()"
+    tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h4>Nuevo Documento</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="modalCreateDocument.hide()">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <form [formGroup]="createDocumentForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="col-form-label">Nombre</label>
+                                <input type="text" placeholder="Nombre Documento" class="form-control"
+                                    formControlName="name" maxlength="120">
+                                <div
+                                    *ngIf="createDocumentForm.controls.name.invalid && createDocumentForm.controls.name.touched">
+                                    <small id="required-name" class="text-left"
+                                        *ngIf="createDocumentForm.controls.name.errors?.required">
+                                        Se requiere nombre</small>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="col-form-label">Requisitos</label>
+                                <input type="text" class="form-control" placeholder="Requisitos"
+                                    formControlName="requirements" />
+                                <div
+                                    *ngIf="createDocumentForm.controls.requirements.invalid && createDocumentForm.controls.requirements.touched">
+                                    <small id="required-name" class="text-left"
+                                        *ngIf="createDocumentForm.controls.requirements.errors?.required">
+                                        Se requiere requisitos del documento</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="btn-create-document" (click)="createDocument()" class="btn btn-primary"
+                        [disabled]="createDocumentForm.invalid">Crear
+                        Documento</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

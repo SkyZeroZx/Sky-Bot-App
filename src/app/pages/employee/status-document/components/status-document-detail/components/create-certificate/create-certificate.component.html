@@ -1,0 +1,23 @@
+<div class="certificate-upload">
+    <label for="file-input">
+        <div id="btn-add-attachment" class="btn info" aria-hidden="true">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Adjuntar Certificado
+        </div>
+    </label>
+    <input id="file-input" accept="image/*,.pdf" #inputFileCertificate type="file"
+        (change)="certificateSelected($any($event))" />
+</div>
+
+
+
+
+
+<swal #swalUploadCertificate [title]="'Agregar Certificado'" [showCancelButton]="true" [focusCancel]="true"
+    width="1000px" height="1000px" [confirmButtonText]="'Confirmar'" [cancelButtonText]="'Cancelar'"
+    (confirm)="uploadCertificate()">
+    <ng-container *swalPortal="swalPortalTargets.content">
+        <ngx-doc-viewer [url]="swalFilePreview" viewer="url" style="width:100%;height:85vh;">
+        </ngx-doc-viewer>
+    </ng-container>
+</swal>

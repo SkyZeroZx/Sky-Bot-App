@@ -1,0 +1,26 @@
+button[role='switch']:focus {
+  outline: 0 !important;
+}
+
+.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-mdc-disabled)
+  .mat-mdc-slide-toggle-bar {
+  background-color: #3e76df !important;
+  outline: none !important;
+}
+
+.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-mdc-disabled)
+  .mat-mdc-slide-toggle-thumb {
+  background-color: #3e76df !important;
+  outline: none !important;
+}
+
+div.mdc-switch__icons {
+  display: none !important;
+}
+
+.mat-mdc-button-persistent-ripple {
+  background-color: transparent !important;
+}
+.mat-mdc-slide-toggle .mdc-switch .mdc-switch__handle::before {
+  background: transparent !important;
+}

@@ -1,0 +1,50 @@
+<div bsModal class="modal fade" #modalUpdateStatus="bs-modal" [config]="{backdrop: false }" (onHidden)="onHidden()"
+    tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content card">
+            <div class="modal-header">
+                <h4>Actualizar Estado</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="modalUpdateStatus.hide()">
+                    <span>&times;</span>
+                </button>
+            </div>
+
+            <form [formGroup]="updateStatusForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="status" class="col-form-label">Estado</label>
+                                <select class="form-control" formControlName="status">
+                                    <option value="">Seleccione Estado</option>
+                                    <option [value]="'register'">REGISTRADO</option>
+                                    <option [value]="'processing'">PROCESANDO</option>
+                                    <option [value]="'observed'">OBSERVADO</option>
+                                    <option [value]="'finalized'">FINALIZADO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="status" class="col-form-label">Observaciones</label>
+                                <textarea class="form-control" formControlName="observations"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnCreateUser" (click)="updateStatus()" class="btn btn-primary"
+                        [disabled]="updateStatusForm.invalid">Actualizar
+                        Estado</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
