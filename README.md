@@ -26,6 +26,10 @@ _Adicionalmente funciona como PWA(Progresive Web App) que puede integrarse en cu
 
 ## Comenzando 🚀
 
+
+
+
+
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 
 _Puede visualizar una Demo del Proyecto en el siguiente enlace : https://sky-bot.skyzerozx.com_
@@ -91,10 +95,8 @@ _Dirigirse a la ruta http://localhost:4200/#/login/ se tendra la pantalla de Log
 
 _Puede visualizar una demo en funcionamiento en el siguiente video que detalla los diferentes modulos_
 
-<video width="338" height="848" controls autoplay> 
-  <source src="demo/demo.mp4" type="video/mp4">
-</video>
-
+ https://user-images.githubusercontent.com/73321943/209492837-6c217950-4172-4ead-87af-4a814ff76db7.mp4
+ 
 
 ## Ejecutando como PWA 👨🏻‍💻
 
