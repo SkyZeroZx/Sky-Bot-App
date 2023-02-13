@@ -5,22 +5,23 @@ import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Router } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SwPush } from '@angular/service-worker';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { of, throwError } from 'rxjs';
-import { AuthService } from '../../services/auth/auth.service';
-import { ThemeService } from '../../services/theme/theme.service';
-import { UserService } from '../../services/users/user.service';
+import { AuthService, UserService } from '@core/services';
 import { UserOptionsComponent } from './components/user-options/user-options.component';
 import { UserPhotoComponent } from './components/user-photo/user-photo.component';
 import { UserProfileComponent } from './user-profile.component';
 import { UserProfileMock } from './user-profile.mock.spec';
-import { UserProfileRouter } from './user-profile.routing';
+import { AuthModule } from '@auth0/auth0-angular';
+import { auth0Config } from '../../../core/config';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
 fdescribe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -29,6 +30,7 @@ fdescribe('UserProfileComponent', () => {
   let authService: AuthService;
   let toastrService: ToastrService;
   let userService: UserService;
+  const userProfile = UserProfileMock.userProfileMock;
   let mockRouter = {
     routerState: { root: '' },
     navigate: jasmine.createSpy('navigate'),
@@ -39,11 +41,11 @@ fdescribe('UserProfileComponent', () => {
       declarations: [UserProfileComponent, UserOptionsComponent, UserPhotoComponent],
       imports: [
         HttpClientTestingModule,
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
         RouterTestingModule,
         CommonModule,
-        RouterModule.forChild(UserProfileRouter),
         FormsModule,
+        AuthModule.forRoot(auth0Config),
         ReactiveFormsModule,
         SweetAlert2Module.forRoot(),
         ToastrModule.forRoot(),
@@ -56,9 +58,8 @@ fdescribe('UserProfileComponent', () => {
       ],
       providers: [
         ToastrService,
-        AuthService,
         UserService,
-        ThemeService,
+        AuthService,
         SwPush,
         FormBuilder,
         DatePipe,
@@ -67,6 +68,7 @@ fdescribe('UserProfileComponent', () => {
         ReactiveFormsModule,
         { provide: ToastrService, useClass: ToastrService },
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 
@@ -96,58 +98,32 @@ fdescribe('UserProfileComponent', () => {
     expect(spyCreateUserProfileForm).toHaveBeenCalled();
   });
 
-  it('Validate getProfile OK', () => {
-    const spyGetProfile = spyOn(userService, 'getProfile').and.returnValue(
-      of(UserProfileMock.userProfileMock),
-    );
-    const spyPatchValue = spyOn(
-      component.userProfileForm,
-      'patchValue',
-    ).and.callThrough();
+  it('validate changePassword', () => {
+    const spyChangePassword = spyOn(authService, 'swalChangePassword');
+    component.changePassword();
+    expect(spyChangePassword).toHaveBeenCalled();
+  });
+
+  it('validate logOut', () => {
+    const spyLogOut = spyOn(authService, 'logOut');
+    component.logOut();
+    expect(spyLogOut).toHaveBeenCalled();
+  });
+
+  it('validate updateProfile', () => {
+    const spyUpdateUser = spyOn(userService, 'updateUser').and.returnValue(of(null));
+    const spyToast = spyOn(toastrService, 'success');
+    component.updateProfile();
+    expect(spyToast).toHaveBeenCalled();
+    expect(spyUpdateUser).toHaveBeenCalled();
+  });
+
+  it('validate getProfile', () => {
+    const spyUserForm = spyOn(component.userProfileForm, 'patchValue');
+    const spyGetProfile = spyOn(userService, 'getProfile').and.returnValue(of(userProfile));
     component.getProfile();
     expect(spyGetProfile).toHaveBeenCalled();
-    expect(spyPatchValue).toHaveBeenCalledWith(UserProfileMock.userProfileMock);
-  });
-
-  it('Validate getProfile ERROR', () => {
-    const spyGetProfile = spyOn(userService, 'getProfile').and.returnValue(
-      throwError(() => new Error('Error')),
-    );
-    const spyToastError = spyOn(toastrService, 'error').and.callThrough();
-    component.getProfile();
-    expect(spyToastError).toHaveBeenCalled();
-    expect(spyGetProfile).toHaveBeenCalled();
-  });
-
-  it('Validate onLogout', () => {
-    const spyRouterNavigate = spyOn(mockRouter, 'navigate').and.callThrough();
-    const spyAuthService = spyOn(authService, 'logout').and.callFake(() => {});
-    const spyLocalStorageRemoveItem = spyOn(localStorage, 'removeItem').and.callThrough();
-    component.logout();
-    expect(spyRouterNavigate).toHaveBeenCalledWith(['/login']);
-    expect(spyAuthService).toHaveBeenCalled();
-    expect(spyLocalStorageRemoveItem).toHaveBeenCalled();
-  });
-
-  it('Validate  updateProfile OK', () => {
-    const spyUserService = spyOn(userService, 'updateUser').and.returnValue(
-      of(UserProfileMock.responseOk),
-    );
-    const spyToastService = spyOn(toastrService, 'success').and.callThrough();
-    component.updateProfile();
-    expect(spyUserService).toHaveBeenCalled();
-    expect(spyToastService).toHaveBeenCalled();
-  });
-
-  it('Validate  updateProfile ERROR', () => {
-    const spyUserService = spyOn(userService, 'updateUser').and.returnValue(
-      throwError(() => {
-        new Error('Error');
-      }),
-    );
-    const spyToastService = spyOn(toastrService, 'error').and.callThrough();
-    component.updateProfile();
-    expect(spyUserService).toHaveBeenCalled();
-    expect(spyToastService).toHaveBeenCalled();
+    expect(spyUserForm).toHaveBeenCalled();
+    expect(component.photoUser).toEqual(userProfile.photo);
   });
 });

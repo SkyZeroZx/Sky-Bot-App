@@ -12,7 +12,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class UpdateUserComponent implements OnInit {
   updateUserForm: FormGroup;
-  @Input() inputUser: User;
+  @Input() user: User;
   @Output() close = new EventEmitter();
   @Output() update = new EventEmitter();
   @ViewChild('modalUpdateUser') readonly modalUpdateUser: ModalDirective;
@@ -32,13 +32,12 @@ export class UpdateUserComponent implements OnInit {
   }
 
   createFormUpdateUser(): void {
-    console.log('Edit', this.inputUser);
     this.updateUserForm = this.fb.group({
-      id: [this.inputUser.id],
-      createdAt: [this.inputUser.createdAt],
-      updateAt: [this.inputUser.updateAt],
+      id: [this.user.id],
+      createdAt: [this.user.createdAt],
+      updateAt: [this.user.updateAt],
       dni: [
-        this.inputUser.dni,
+        this.user.dni,
         Validators.compose([
           Validators.required,
           Validators.minLength(8),
@@ -46,7 +45,7 @@ export class UpdateUserComponent implements OnInit {
         ]),
       ],
       phone: [
-        this.inputUser.phone,
+        this.user.phone,
         Validators.compose([
           Validators.required,
           Validators.minLength(9),
@@ -54,7 +53,7 @@ export class UpdateUserComponent implements OnInit {
         ]),
       ],
       username: [
-        this.inputUser.username,
+        this.user.username,
         Validators.compose([
           Validators.required,
           Validators.minLength(6),
@@ -63,7 +62,7 @@ export class UpdateUserComponent implements OnInit {
         ]),
       ],
       name: [
-        this.inputUser.name,
+        this.user.name,
         Validators.compose([
           Validators.required,
           Validators.minLength(2),
@@ -71,9 +70,9 @@ export class UpdateUserComponent implements OnInit {
           Validators.pattern('[A-Za-z ]+'),
         ]),
       ],
-      status: [this.inputUser.status, Validators.required],
+      status: [this.user.status, Validators.required],
       fatherLastName: [
-        this.inputUser.fatherLastName,
+        this.user.fatherLastName,
         Validators.compose([
           Validators.required,
           Validators.minLength(2),
@@ -82,7 +81,7 @@ export class UpdateUserComponent implements OnInit {
         ]),
       ],
       motherLastName: [
-        this.inputUser.motherLastName,
+        this.user.motherLastName,
         Validators.compose([
           Validators.required,
           Validators.minLength(2),
@@ -90,7 +89,7 @@ export class UpdateUserComponent implements OnInit {
           Validators.pattern('[A-Za-z ]+'),
         ]),
       ],
-      role: this.inputUser.role,
+      role: this.user.role,
     });
   }
 
@@ -99,9 +98,6 @@ export class UpdateUserComponent implements OnInit {
       next: (_res) => {
         this.toastrService.success('Se actualizo exitosamente el usuario');
         this.update.emit();
-      },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al actualizar el usuario');
       },
     });
   }

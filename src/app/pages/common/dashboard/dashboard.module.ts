@@ -15,7 +15,6 @@ import {
   DashboardPolarComponent,
 } from '../dashboard/components';
 import { DashboardRoutingModule } from '../dashboard/dashboard.routing';
-import { SharedMaterialModule } from '@shared/material/material.module';
 
 defineLocale('es', esLocale);
 @NgModule({
@@ -33,7 +32,6 @@ defineLocale('es', esLocale);
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    SharedMaterialModule,
     BsDatepickerModule.forRoot(),
     DashboardRoutingModule,
   ],

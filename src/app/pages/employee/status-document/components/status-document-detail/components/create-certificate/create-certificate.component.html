@@ -5,8 +5,7 @@
             Adjuntar Certificado
         </div>
     </label>
-    <input id="file-input" accept="image/*,.pdf" #inputFileCertificate type="file"
-        (change)="certificateSelected($any($event))" />
+    <input id="file-input" #inputFileCertificate type="file" (change)="certificateSelected($any($event))" />
 </div>
 
 
@@ -17,7 +16,8 @@
     width="1000px" height="1000px" [confirmButtonText]="'Confirmar'" [cancelButtonText]="'Cancelar'"
     (confirm)="uploadCertificate()">
     <ng-container *swalPortal="swalPortalTargets.content">
-        <ngx-doc-viewer [url]="swalFilePreview" viewer="url" style="width:100%;height:85vh;">
+        <ngx-doc-viewer [url]="$any(swalFilePreview.result)" style="width:100%;height:85vh;"
+            [viewer]="swalFilePreview.isDoc ? 'mammoth'  : 'url' ">
         </ngx-doc-viewer>
     </ng-container>
 </swal>

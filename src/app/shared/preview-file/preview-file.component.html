@@ -1,0 +1,9 @@
+<i class="fa-bars fa-solid fa-lg" [swal]="swalPreviewFile"></i>
+
+
+<swal [title]="'Preview'" [showCancelButton]="true" width="1000px" height="1000px" #swalPreviewFile>
+    <ng-container *swalPortal="swalPortalTargets.content">
+        <ngx-doc-viewer [url]="url" viewer="url" style="width:100%;height:85vh;">
+        </ngx-doc-viewer>
+    </ng-container>
+</swal>

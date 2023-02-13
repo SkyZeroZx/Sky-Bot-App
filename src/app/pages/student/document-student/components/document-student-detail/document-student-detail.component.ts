@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { StatusDocumentService } from '@core/services';
 import {
   Attachment,
@@ -24,7 +23,6 @@ export class DocumentStudentDetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private statusDocumentService: StatusDocumentService,
-    private toastService: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +32,7 @@ export class DocumentStudentDetailComponent implements OnInit {
   getRouteParams(): void {
     this.activatedRoute.paramMap.subscribe((res) => {
       const idStatusDocument = res.get('id');
+      console.log(idStatusDocument);
       this.getStatusDocumentById(idStatusDocument);
     });
   }
@@ -47,9 +46,6 @@ export class DocumentStudentDetailComponent implements OnInit {
         this.listAttachment = res.listAttachment;
         this.listCertificate = res.listCertificate;
         this.status = res.statusDocument[0].status;
-      },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al obtener datos del tramite');
       },
     });
   }

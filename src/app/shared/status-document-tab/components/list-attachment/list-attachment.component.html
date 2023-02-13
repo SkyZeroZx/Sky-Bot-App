@@ -15,9 +15,18 @@
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="[ 'createDate' ,'url']; sticky: true">
+        <ng-container matColumnDef="preview">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Preview </th>
+            <td style='text-align:center; vertical-align:middle' mat-cell *matCellDef="let row">
+                <app-preview-file [url]="row.url"></app-preview-file>
+            </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="[ 'createDate' ,'url','preview' ]; sticky: true">
         </tr>
-        <tr mat-row *matRowDef="let row; columns: [ 'createDate','url' ];">
+        <tr mat-row *matRowDef="let row; columns: [ 'createDate','url' ,'preview' ];">
         </tr>
     </table>
 </div>

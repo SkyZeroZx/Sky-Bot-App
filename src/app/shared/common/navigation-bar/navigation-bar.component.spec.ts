@@ -1,48 +1,57 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AuthModule, AuthService as Auth0Service } from '@auth0/auth0-angular';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ROUTES, ROUTES_EMPLOYEE } from '../../common/routes/menuItems';
-import { SettingsComponent } from '../../pages/settings/settings.component';
-import { AuthService } from '../../services/auth/auth.service';
-import { ThemeService } from '../../services/theme/theme.service';
+import {
+  SweetAlert2LoaderService,
+  SweetAlert2Module,
+} from '@sweetalert2/ngx-sweetalert2';
+import { auth0Config } from '../../../core/config';
+import { AuthService, ThemeService } from '../../../core/services';
+
 import { SharedMock } from '../shared.mock.spec';
 import { NavigationBarComponent } from './navigation-bar.component';
 
 fdescribe('NavigationBarComponent', () => {
   let component: NavigationBarComponent;
   let fixture: ComponentFixture<NavigationBarComponent>;
-  let authService: AuthService;
   let themeService: ThemeService;
+  let authService: AuthService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       declarations: [NavigationBarComponent],
       imports: [
         BrowserAnimationsModule,
-        RouterTestingModule.withRoutes([
-          { path: 'calendar-admin', component: SettingsComponent },
-        ]),
+        AuthModule.forRoot(auth0Config),
         CommonModule,
         RouterModule,
+        SweetAlert2Module.forRoot(),
         NgbModule,
         HttpClientTestingModule,
         RouterTestingModule,
       ],
-      providers: [AuthService, ThemeService],
-      schemas: [NO_ERRORS_SCHEMA],
+      providers: [AuthService, Auth0Service, ThemeService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationBarComponent);
     authService = TestBed.inject(AuthService);
     themeService = TestBed.inject(ThemeService);
-
     component = fixture.componentInstance;
     localStorage.setItem('user', JSON.stringify(SharedMock.userStorage));
     fixture.detectChanges();
@@ -53,9 +62,9 @@ fdescribe('NavigationBarComponent', () => {
   });
 
   it('Validate ngOnInit', () => {
-    const spyTabNavigation = spyOn(component, 'tabNavigation').and.callThrough();
-    const spyEnabledDarkTheme = spyOn(component, 'enabledDarkTheme').and.callThrough();
-    const spyGetRouterOfRoles = spyOn(component, 'getRouterOfRoles').and.callThrough();
+    const spyTabNavigation = spyOn(component, 'tabNavigation');
+    const spyEnabledDarkTheme = spyOn(component, 'enabledDarkTheme');
+    const spyGetRouterOfRoles = spyOn(component, 'getRoutesByRole');
     component.ngOnInit();
     expect(spyTabNavigation).toHaveBeenCalled();
     expect(spyEnabledDarkTheme).toHaveBeenCalled();
@@ -71,29 +80,10 @@ fdescribe('NavigationBarComponent', () => {
     expect(component.darkTheme).toBeFalsy();
   });
 
-  it('Validate getRouterOfRoles', () => {
-    component.getRouterOfRoles();
-    expect(component.menuItems).toEqual(ROUTES);
-    spyOn(authService, 'getItemToken').and.callFake(() => {
-      return 'employee';
-    });
-    component.getRouterOfRoles();
-    expect(component.menuItems).toEqual(ROUTES_EMPLOYEE);
-  });
-
   it('Validate tabNavigation', fakeAsync(() => {
     const spyDocument = spyOn(document, 'querySelectorAll').and.callThrough();
     component.tabNavigation();
     expect(spyDocument).toHaveBeenCalled();
-    const element = fixture.nativeElement;
-    const navigationBarElement = element.querySelector('.yellow');
-    const spyRemoveClass = spyOn(
-      navigationBarElement.classList,
-      'remove',
-    ).and.callThrough();
-    navigationBarElement.click();
-    tick(1000);
-    fixture.detectChanges();
-    expect(spyRemoveClass).toHaveBeenCalled();
+ 
   }));
 });

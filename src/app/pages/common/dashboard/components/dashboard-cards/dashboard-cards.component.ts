@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { CardsStatus, StatusListChartReport } from '@core/interfaces';
 
 @Component({
@@ -6,7 +6,7 @@ import { CardsStatus, StatusListChartReport } from '@core/interfaces';
   templateUrl: './dashboard-cards.component.html',
   styleUrls: ['./dashboard-cards.component.scss'],
 })
-export class DashboardCardsComponent {
+export class DashboardCardsComponent implements OnChanges {
   @Input()
   statusListChartReport: StatusListChartReport;
   cardsStatus: CardsStatus = {

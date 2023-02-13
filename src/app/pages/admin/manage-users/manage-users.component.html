@@ -150,6 +150,6 @@
     (close)="showCreateUser=false"></app-create-user>
 
 
-<app-update-user *ngIf="showUpdateUser" [inputUser]="userSelected" (update)="showUpdateUser=false; getUsers();"
+<app-update-user *ngIf="showUpdateUser" [user]="userSelected" (update)="showUpdateUser=false; getUsers();"
     (close)="showUpdateUser= false ">
 </app-update-user>

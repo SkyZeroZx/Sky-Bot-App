@@ -74,9 +74,6 @@ export class UserProfileComponent implements OnInit {
         });
         this.photoUser = res.photo;
       },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al obtener el perfil');
-      },
     });
   }
 
@@ -84,9 +81,6 @@ export class UserProfileComponent implements OnInit {
     this.userService.updateUser(this.userProfileForm.value).subscribe({
       next: (_res) => {
         this.toastrService.success('Se actualizo exitosamente su perfil');
-      },
-      error: (_err) => {
-        this.toastrService.error('Error al actualizar su perfil');
       },
     });
   }

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 import { Attachment } from '@core/interfaces';
 
 @Component({

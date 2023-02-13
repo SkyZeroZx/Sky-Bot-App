@@ -8,8 +8,8 @@ import {
   PublicLayoutComponent,
   AuthLayoutComponent,
   LoadingLayoutComponent,
+  ContentLayoutComponent,
 } from './layouts';
-import { ContentLayoutComponent } from './layouts/content-layout/content-layout.component';
 
 const routes: Routes = [
   {
@@ -63,7 +63,7 @@ const routes: Routes = [
           import('../app/pages/employee/employee.module').then((m) => m.EmployeeModule),
       },
       {
-        path: '',
+        path: 'student',
         loadChildren: () =>
           import('../app/pages/student/student.module').then((m) => m.StudentModule),
       },

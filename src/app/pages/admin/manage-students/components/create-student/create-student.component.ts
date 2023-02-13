@@ -57,12 +57,9 @@ export class CreateStudentComponent implements OnInit, AfterViewInit {
         null,
         Validators.compose([
           Validators.required,
-          Validators.compose([
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(120),
-            Validators.email,
-          ]),
+          Validators.minLength(6),
+          Validators.maxLength(120),
+          Validators.email,
         ]),
       ],
     });
@@ -73,9 +70,6 @@ export class CreateStudentComponent implements OnInit, AfterViewInit {
       next: (_res) => {
         this.update.emit();
         this.toastrService.success('Estudiante registrado exitosamente');
-      },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al registra al estudiante');
       },
     });
   }

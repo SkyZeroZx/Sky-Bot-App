@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 export const adminRoutes: Routes = [
   {
@@ -30,3 +31,9 @@ export const adminRoutes: Routes = [
       ),
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forChild(adminRoutes)],
+  exports: [RouterModule],
+})
+export class AdminRoutingModule {}

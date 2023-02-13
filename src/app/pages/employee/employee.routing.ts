@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 export const employeeRoute: Routes = [
   {
     path: '',
@@ -13,9 +14,8 @@ export const employeeRoute: Routes = [
   },
 ];
 
-
 @NgModule({
   imports: [RouterModule.forChild(employeeRoute)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EmployeeRoutingModule { }
+export class EmployeeRoutingModule {}

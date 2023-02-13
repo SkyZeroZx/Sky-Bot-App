@@ -92,4 +92,4 @@
     (close)="showCreateDocument=false"></app-create-document>
 
 <app-update-document *ngIf="showUpdateDocument" (update)="showUpdateDocument=false; getDocuments();"
-    [inputDocument]="documentSelected" (close)="showUpdateDocument=false"></app-update-document>
+    [document]="documentSelected" (close)="showUpdateDocument=false"></app-update-document>

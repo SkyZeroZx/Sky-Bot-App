@@ -60,7 +60,6 @@ export class ErrorInterceptorService {
     let handled = false;
     if (error.status == 401) {
       this.auth0Service.logout();
-      this.router.navigateByUrl('/login');
       handled = true;
     }
     return handled;

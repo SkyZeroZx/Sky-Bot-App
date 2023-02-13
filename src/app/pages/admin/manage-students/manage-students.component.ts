@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { QueryParamsPagination, Student } from '@core/interfaces';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
- 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { StudentService } from '@core/services';
-import { QUERY_PARAMS_PAGINATON } from '@core/constants/Constant';
+import { QUERY_PARAMS_PAGINATON } from '@core/constants/general';
 
 @Component({
   selector: 'app-manage-students',
@@ -66,9 +65,6 @@ export class ManageStudentComponent implements OnInit {
         this.listStudents = data;
         this.paginator.length = meta.itemCount;
       },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al buscar estudiantes');
-      },
     });
   }
 
@@ -85,9 +81,6 @@ export class ManageStudentComponent implements OnInit {
         this.getStudents();
         this.paginator.firstPage();
         this.toastService.success('Estudiante eliminado exitosamente');
-      },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al eliminar al estudiante');
       },
     });
   }

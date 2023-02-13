@@ -1,6 +1,6 @@
 import { QueryParamsPagination } from '@core/interfaces';
 
-export const ADMINISTRATIVE_ROLE: string[] = ['admin', 'employee'];
+export const ADMINISTRATIVE_ROLE: readonly string[] = ['admin', 'employee'];
 
 export const QUERY_PARAMS_PAGINATON: QueryParamsPagination = {
   page: 1,

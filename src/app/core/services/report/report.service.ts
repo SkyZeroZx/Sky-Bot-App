@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
-import { REPORT } from '@core/constants/Constant';
+import { REPORT } from '@core/constants/general';
 import 'jspdf-autotable';
 
 

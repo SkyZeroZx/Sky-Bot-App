@@ -109,5 +109,5 @@
 <app-create-student *ngIf="showCreateStudent" (close)="showCreateStudent=false;"
     (update)="showCreateStudent=false; getStudents();"></app-create-student>
 
-<app-update-student *ngIf="showUpdateStudent" (close)="showUpdateStudent=false;" [inputStudent]="studentSelected"
+<app-update-student *ngIf="showUpdateStudent" (close)="showUpdateStudent=false;" [student]="studentSelected"
     (update)="showUpdateStudent=false; getStudents();"></app-update-student>

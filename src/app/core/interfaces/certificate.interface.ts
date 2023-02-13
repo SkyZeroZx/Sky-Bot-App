@@ -4,3 +4,8 @@ export interface Certificate {
   url: string;
   registerDate: string | Date;
 }
+
+export interface CertificateCreate {
+  idStatusDocument: string;
+  file: File;
+}

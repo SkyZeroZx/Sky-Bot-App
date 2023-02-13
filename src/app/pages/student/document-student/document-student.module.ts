@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from '@shared/material/material.module';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CUSTOM_PAGINATOR_LABEL } from '@core/config';
-import { StatusDocumentTabModule } from '../../../shared/status-document-tab/status-document.module';
+import { StatusDocumentTabModule } from '@shared/status-document-tab/status-document.module';
 
 @NgModule({
   declarations: [DocumentStudentComponent, DocumentStudentDetailComponent],

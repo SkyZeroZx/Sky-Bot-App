@@ -51,7 +51,7 @@ export const ROUTES_ADMIN: RouteInfo[] = [
     class: 'yellow',
   },
   {
-    path: '/student-document',
+    path: 'student/student-document',
     title: 'Mis Tramites',
     id: 'btn-student-document',
     icon: 'fa-solid fa-file',
@@ -63,7 +63,7 @@ export const ROUTES_ADMIN: RouteInfo[] = [
 export const ROUTES_EMPLOYEE: RouteInfo[] = [
   ...ROUTER_DASHBOARD,
   {
-    path: '/status-document',
+    path: 'status-document',
     title: 'Tramites',
     id: 'btn-status-document',
     icon: 'fa-solid fa-file',
@@ -74,7 +74,7 @@ export const ROUTES_EMPLOYEE: RouteInfo[] = [
 
 export const ROUTES_STUDENT: RouteInfo[] = [
   {
-    path: '/student-document',
+    path: 'student/student-document',
     title: 'Mis Tramites',
     id: 'btn-student-document',
     icon: 'fa-solid fa-file',

@@ -8,7 +8,6 @@ import { StatusDocumentService } from '@core/services';
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-status-document-detail',
@@ -22,11 +21,9 @@ export class StatusDocumentDetailComponent implements OnInit {
   listCertificate: Certificate[] = [];
   showCreateStatus: boolean = false;
 
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private statusDocumentService: StatusDocumentService,
-    private toastService: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -47,9 +44,6 @@ export class StatusDocumentDetailComponent implements OnInit {
         this.statusDocument = res.statusDocument;
         this.listAttachment = res.listAttachment;
         this.listCertificate = res.listCertificate;
-      },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al obtener datos del tramite');
       },
     });
   }

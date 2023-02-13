@@ -4,28 +4,36 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ROUTES_EMPLOYEE } from '../../common/routes/menuItems';
-import { AuthService } from '../../services/auth/auth.service';
-import { ThemeService } from '../../services/theme/theme.service';
+import { ThemeService, AuthService } from '@core/services';
 import { SharedMock } from '../shared.mock.spec';
 import { SidebarComponent } from './sidebar.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { auth0Config } from '../../../core/config';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ROUTES_EMPLOYEE } from '@core/routes/menuItems';
+import { of } from 'rxjs';
 
 fdescribe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
   let authService: AuthService;
   let themeService: ThemeService;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SidebarComponent],
       imports: [
         CommonModule,
         RouterModule,
+        SweetAlert2Module.forRoot(),
+        AuthModule.forRoot(auth0Config),
         NgbModule,
         HttpClientTestingModule,
         RouterTestingModule,
       ],
       providers: [AuthService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -44,12 +52,12 @@ fdescribe('SidebarComponent', () => {
   });
 
   it('Validate ngOnInit', () => {
-    const spyAuthService = spyOn(authService, 'getItemToken').and.callFake(() => {
-      return 'employee';
+    const spyGetRouterByRole = spyOn(authService, 'getRoutesByRole').and.callFake(() => {
+      return of(ROUTES_EMPLOYEE);
     });
     component.ngOnInit();
-    expect(spyAuthService).toHaveBeenCalled();
     expect(component.menuItems).toEqual(ROUTES_EMPLOYEE);
+    expect(spyGetRouterByRole).toHaveBeenCalled();
   });
 
   it('Validate onSwipe', () => {

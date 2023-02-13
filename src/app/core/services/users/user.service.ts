@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
- 
+
 import {
   UpdateUser,
   User,
@@ -53,12 +53,6 @@ export class UserService {
 
   getProfile(): Observable<User> {
     return this.http.get<User>(`${environment.API_URL}/users/profile`);
-  }
-
-  sendNotification(users: User[]): Observable<Response> {
-    return this.http.post<Response>(`${environment.API_URL}/notificacion/send`, {
-      users: users,
-    });
   }
 
   uploadPhoto(file: File): Observable<Response> {

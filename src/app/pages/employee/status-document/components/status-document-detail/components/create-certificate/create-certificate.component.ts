@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { SwalComponent, SwalPortalTargets } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrService } from 'ngx-toastr';
-import { StatusDocumentByStudent } from '@core/interfaces';
-import { previewUrlFile } from '@core/helpers/helper';
+import { CertificateCreate, StatusDocumentByStudent } from '@core/interfaces';
+import { PreviewFile, previewUrlFile } from '@core/helpers/helper';
 import { CertificateService } from '@core/services';
 
 @Component({
@@ -24,7 +24,7 @@ export class CreateCertificateComponent {
   readonly inputFileCertificate: ElementRef;
   @ViewChild('swalUploadCertificate')
   readonly swalUploadCertificate: SwalComponent;
-  swalFilePreview: string = '';
+  swalFilePreview: PreviewFile;
   fileCertificate: File;
 
   constructor(
@@ -34,17 +34,24 @@ export class CreateCertificateComponent {
   ) {}
 
   uploadCertificate() {
-    console.log('Upload certificate ', this.fileCertificate);
+    const certificateCreate: CertificateCreate = {
+      file: this.fileCertificate,
+      idStatusDocument: this.statusDocumentByStudent.idStatusDocument,
+    };
+
+    this.certificateService.createCertificate(certificateCreate).subscribe({
+      next: (_res) => {
+        this.toastService.success('Certificado subido exitosamente');
+        this.update.emit();
+        console.log('Upload certificate ', this.fileCertificate);
+      },
+    });
   }
 
   async certificateSelected(event: any) {
     if (typeof event.target.files[0] !== 'undefined') {
       try {
         this.swalFilePreview = await previewUrlFile(event.target.files[0]);
-        this.fileCertificate = event.target.files[0];
-
-        console.log('data processed', this.swalFilePreview);
-        console.log('My input', this.statusDocumentByStudent);
         this.swalUploadCertificate.fire();
         this.inputFileCertificate.nativeElement.value = null;
       } catch (error) {

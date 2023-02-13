@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { StatusListChartReport } from '@core/interfaces';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -10,7 +10,7 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
   templateUrl: './dashboard-polar.component.html',
   styleUrls: ['./dashboard-polar.component.scss'],
 })
-export class DashboardPolarComponent {
+export class DashboardPolarComponent implements OnChanges {
   @Input()
   statusListChartReport: StatusListChartReport;
   @ViewChild(BaseChartDirective)

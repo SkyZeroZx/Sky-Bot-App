@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { publicRoutes } from './public.routing';
+import { PublicRoutingModule } from './public.routing';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule.forChild(publicRoutes)],
+  imports: [CommonModule, PublicRoutingModule],
 })
 export class PublicModule {}

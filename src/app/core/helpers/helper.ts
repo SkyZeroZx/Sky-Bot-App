@@ -1,9 +1,20 @@
 import { StatusChartsReport, StatusListChartReport } from '@core/interfaces';
 
-export function previewUrlFile(file): any {
+export interface PreviewFile {
+  result: string | ArrayBuffer;
+  isDoc: boolean;
+}
+
+function IS_DOCX(type: string): boolean {
+  return (
+    type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  );
+}
+
+export function previewUrlFile(file: Blob): Promise<PreviewFile> {
   return new Promise((res, rej) => {
     const reader = new FileReader();
-    reader.onload = (e) => res(e.target.result);
+    reader.onload = (e) => res({ result: e.target.result, isDoc: IS_DOCX(file.type) });
     reader.onerror = (e) => rej(e);
     reader.readAsDataURL(file);
   });

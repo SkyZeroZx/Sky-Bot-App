@@ -28,7 +28,8 @@ export class UserPhotoComponent {
   async userAvatarSelected(event: any) {
     if (typeof event.target.files[0] !== 'undefined') {
       try {
-        this.swalPhotoUser = await previewUrlFile(event.target.files[0]);
+        this.swalPhotoUser = (await previewUrlFile(event.target.files[0]))
+          .result as string;
         this.fileUserAvatar = event.target.files[0];
         this.swalUploadPhoto.fire();
       } catch (error) {
@@ -41,9 +42,6 @@ export class UserPhotoComponent {
     this.userService.uploadPhoto(this.fileUserAvatar).subscribe({
       next: (_res) => {
         this.inputUserPhoto = this.swalPhotoUser;
-      },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al subir su foto');
       },
     });
   }

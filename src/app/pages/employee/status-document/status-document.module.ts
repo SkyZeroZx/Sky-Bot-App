@@ -8,8 +8,10 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { StatusDocumentComponent } from '../status-document/status-document.component';
 import { StatusDocumentDetailComponent } from '../status-document/components/status-document-detail/status-document-detail.component';
 import { StatusDocumentRoutingModule } from '../status-document/status-document.routing';
-import { CreateStatusComponent } from './components/status-document-detail/components';
-import { CreateCertificateComponent } from './components/status-document-detail/components/create-certificate/create-certificate.component';
+import {
+  CreateStatusComponent,
+  CreateCertificateComponent,
+} from './components/status-document-detail/components';
 import { StatusDocumentTabModule } from '@shared/status-document-tab/status-document.module';
 import { CUSTOM_PAGINATOR_LABEL } from '@core/config';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';

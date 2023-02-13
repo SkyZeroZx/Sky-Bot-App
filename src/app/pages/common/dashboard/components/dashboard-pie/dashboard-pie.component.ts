@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { labels, pieChartOptions } from '@core/config';
@@ -10,7 +10,7 @@ import DatalabelsPlugin from 'chartjs-plugin-datalabels';
   templateUrl: './dashboard-pie.component.html',
   styleUrls: ['./dashboard-pie.component.scss'],
 })
-export class DashboardPieComponent {
+export class DashboardPieComponent implements OnChanges{
   @Input()
   statusListChartReport: StatusListChartReport;
   @ViewChild(BaseChartDirective)

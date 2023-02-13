@@ -1,35 +1,45 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { of, throwError } from 'rxjs';
-import { Constant } from '../../../../common/constants/Constant';
-import { ReporteService } from '../../../../services/report/report.service';
-import { UserService } from '../../../../services/users/user.service';
+import { UserService } from '@core/services';
 import { ManageUsersComponent } from './manage-users.component';
 import { ManageUsersMock } from './manage-users.mock.spec';
 import { manageUsersRouter } from './manage-users.routing';
+import { SharedMaterialModule } from '../../../shared/material/material.module';
+import { PageEvent } from '@angular/material/paginator';
+import { of } from 'rxjs';
 
 fdescribe('ManageUsersComponent', () => {
   let component: ManageUsersComponent;
   let fixture: ComponentFixture<ManageUsersComponent>;
-  let reporteService: ReporteService;
   let toastrService: ToastrService;
   let userService: UserService;
-  const { username, id } = ManageUsersMock.userMock;
+  const searchValue = 'search';
+  const searchStatus = 'status';
+  const user = ManageUsersMock.userMock;
+  const usersPagination = ManageUsersMock.usersPagination;
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ManageUsersComponent],
       imports: [
         HttpClientTestingModule,
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
         RouterTestingModule,
+        SharedMaterialModule,
         CommonModule,
         RouterModule.forChild(manageUsersRouter),
         FormsModule,
@@ -39,7 +49,6 @@ fdescribe('ManageUsersComponent', () => {
       ],
       providers: [
         ToastrService,
-        ReporteService,
         UserService,
         FormBuilder,
         { provide: ToastrService, useClass: ToastrService },
@@ -50,124 +59,101 @@ fdescribe('ManageUsersComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ManageUsersComponent);
-    component = fixture.componentInstance;
-    reporteService = TestBed.inject(ReporteService);
     toastrService = TestBed.inject(ToastrService);
     userService = TestBed.inject(UserService);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    jasmine.getEnv().allowRespy(true);
   });
 
   it('ManageUsersComponent Create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Validate ngOnInit', () => {
-    const spyCreateFormFilterUsers = spyOn(
-      component,
-      'createFormFilterUsers',
-    ).and.callThrough();
-    const spyGetAllUsers = spyOn(component, 'getAllUsers').and.callThrough();
+  it('validate ngOnInit', () => {
+    const spyCreateFormFilterUsers = spyOn(component, 'createFormFilterUsers');
+    const spySearchUserByFilter = spyOn(component, 'searchUserByFilter');
+    const spySearchUserByStatus = spyOn(component, 'searchUserByStatus');
+    const spyGetUsers = spyOn(component, 'getUsers');
     component.ngOnInit();
     expect(spyCreateFormFilterUsers).toHaveBeenCalled();
-    expect(spyGetAllUsers).toHaveBeenCalled();
+    expect(spySearchUserByFilter).toHaveBeenCalled();
+    expect(spySearchUserByStatus).toHaveBeenCalled();
+    expect(spyGetUsers).toHaveBeenCalled();
   });
 
-  it('Validate exportPdf', () => {
-    Constant.REPORT = ManageUsersMock.listUsersMock;
-    const spyExportAsPDF = spyOn(reporteService, 'exportAsPDF').and.callThrough();
-    component.exportPdf();
-    expect(spyExportAsPDF).toHaveBeenCalled();
+  it('validate searchUserByFilter', fakeAsync(() => {
+    const spyGetUsers = spyOn(component, 'getUsers');
+    const spyPaginator = spyOn(component.paginator, 'firstPage');
+    component.userForm.controls.filter.setValue(searchValue);
+    tick(1000);
+    expect(component.queryParams.search).toEqual(searchValue);
+    expect(spyPaginator).toHaveBeenCalled();
+    expect(spyGetUsers).toHaveBeenCalled();
+  }));
+
+  it('validate searchUserByStatus', fakeAsync(() => {
+    const spyPaginator = spyOn(component.paginator, 'firstPage');
+    const spyGetUsers = spyOn(component, 'getUsers');
+    component.userForm.controls.status.setValue(searchStatus);
+    tick(1000);
+    expect(spyPaginator).toHaveBeenCalled();
+    expect(component.queryParams.optionalSearch).toEqual(searchStatus);
+    expect(spyGetUsers).toHaveBeenCalled();
+  }));
+
+  it('validate onChangePage', () => {
+    const spyGetUsers = spyOn(component, 'getUsers');
+    const pageEvent: PageEvent = {
+      pageIndex: 0,
+      pageSize: 0,
+      length: 0,
+    };
+    component.onChangePage(pageEvent);
+    expect(component.queryParams.page).toEqual(pageEvent.pageIndex + 1);
+    expect(component.queryParams.take).toEqual(pageEvent.pageSize);
+    expect(spyGetUsers).toHaveBeenCalled();
   });
 
-  it('Validate showModalUpdateUser', () => {
-    const spyShowModal = spyOn(component.modalUpdateUser, 'show').and.callThrough();
-    component.showModalUpdateUser(ManageUsersMock.userMock);
-    expect(component.userSelected).toEqual(ManageUsersMock.userMock);
-    expect(spyShowModal).toHaveBeenCalled();
-    expect(component.updateUser).toBeTruthy();
+  it('validate showModalCreateUser', () => {
+    component.showModalCreateUser();
+    expect(component.showCreateUser).toBeTrue();
   });
 
-  it('Validate onChangeForm', () => {
-    component.onChangeForm();
-    expect(component.p).toEqual(1);
+  it('validate showModalUpdateUser', () => {
+    component.showModalUpdateUser(user);
+    expect(component.userSelected).toEqual(user);
+    expect(component.showUpdateUser).toBeTrue();
   });
 
-  it('Validate getAllUsers OK', () => {
-    const spyUserService = spyOn(userService, 'getAllUsers').and.returnValue(
-      of(ManageUsersMock.listUsersMock),
-    );
-    component.getUsers();
-    expect(component.listUsersOk).toBeTruthy();
-    expect(component.listUsers).toEqual(ManageUsersMock.listUsersMock);
-    expect(spyUserService).toHaveBeenCalled();
-  });
-
-  it('Validate getAllUsers ERROR', () => {
-    const spyUserService = spyOn(userService, 'getAllUsers').and.returnValue(
-      throwError(() => {
-        new Error('Error');
-      }),
-    );
-    const spyToastService = spyOn(toastrService, 'error').and.callThrough();
-    component.getUsers();
-    expect(spyUserService).toHaveBeenCalled();
-    expect(spyToastService).toHaveBeenCalled();
-  });
-
-  it('Validate resetUserPassword OK', () => {
+  it('validate resetUserPassword', () => {
+    const spyGetUsers = spyOn(component, 'getUsers');
+    const spyToastService = spyOn(toastrService, 'success');
     const spyUserService = spyOn(userService, 'resetUserPassword').and.returnValue(
       of(null),
     );
-    const spyGetAllUsers = spyOn(userService, 'getAllUsers').and.callThrough();
-    const spyToastService = spyOn(toastrService, 'success').and.callThrough();
-    component.resetUserPassword(username);
-
-    expect(spyUserService).toHaveBeenCalledWith(username);
-    expect(spyGetAllUsers).toHaveBeenCalled();
+    component.resetUserPassword(user.username);
     expect(spyToastService).toHaveBeenCalled();
+    expect(spyGetUsers).toHaveBeenCalled();
+    expect(spyUserService).toHaveBeenCalledWith(user.username);
   });
 
-  it('Validate resetUserPassword ERROR', () => {
-    const spyUserService = spyOn(userService, 'resetUserPassword').and.returnValue(
-      throwError(() => {
-        new Error('Error');
-      }),
+  it('validate getUser', () => {
+    const spyUserService = spyOn(userService, 'getUsers').and.returnValue(
+      of(usersPagination),
     );
-    const spyToastService = spyOn(toastrService, 'error').and.callThrough();
-    component.resetUserPassword(username);
-
-    expect(spyUserService).toHaveBeenCalledWith(username);
-    expect(spyToastService).toHaveBeenCalled();
+    component.getUsers();
+    expect(component.listUsers).toEqual(usersPagination.data);
+    expect(component.paginator.length).toEqual(usersPagination.meta.itemCount);
+    expect(spyUserService).toHaveBeenCalled();
   });
 
-  it('Validate deleteUser OK', () => {
-    const spyDeleteUser = spyOn(userService, 'deleteUser').and.returnValue(of(null));
-    const spyToastService = spyOn(toastrService, 'success').and.callThrough();
-    const spyGetAllUsers = spyOn(userService, 'getAllUsers').and.callThrough();
-    component.deleteUser(id);
-    expect(spyDeleteUser).toHaveBeenCalledWith(id);
-    expect(component.p).toEqual(1);
-    expect(spyToastService).toHaveBeenCalled();
-    expect(spyGetAllUsers).toHaveBeenCalled();
-  });
-
-  it('Validate deleteUser OK', () => {
-    const spyDeleteUser = spyOn(userService, 'deleteUser').and.returnValue(
-      throwError(() => {
-        new Error('Error');
-      }),
-    );
-    const spyToastService = spyOn(toastrService, 'error').and.callThrough();
-    component.deleteUser(id);
-    expect(spyDeleteUser).toHaveBeenCalledWith(id);
-    expect(spyToastService).toHaveBeenCalled();
-  });
-
-  it('Validate showModalCreateUser', () => {
-    const spyShowModal = spyOn(component.modalCreateUser, 'show').and.callThrough();
-    component.showModalCreateUser();
-    expect(component.showModalCreateUser).toBeTruthy();
-    expect(spyShowModal).toHaveBeenCalled();
+  it('validate deleteUser', () => {
+    const spyPaginator = spyOn(component.paginator, 'firstPage');
+    const spyGetUsers = spyOn(component, 'getUsers');
+    const spyUserService = spyOn(userService, 'deleteUser').and.returnValue(of(null));
+    component.deleteUser(user.username);
+    expect(spyGetUsers).toHaveBeenCalled();
+    expect(spyUserService).toHaveBeenCalledWith(user.username);
+    expect(spyPaginator).toHaveBeenCalled();
   });
 });

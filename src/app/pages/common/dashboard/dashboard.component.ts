@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { listLocales } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { MAX_DATE, INIT_DATE } from '@core/constants/Constant';
+import { MAX_DATE, INIT_DATE } from '@core/constants/general';
 import {
   StatusChart,
   StatusListChartReport,
@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
     this.createFormChart();
     this.getDocuments();
     this.getChartsStatus([this.initDate, this.maxDate]);
-    this.suscribeChangeValuesForm();
+    this.subscribeChangeValuesForm();
   }
 
   createFormChart() {
@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  suscribeChangeValuesForm() {
+  subscribeChangeValuesForm() {
     this.chartsForm.valueChanges.subscribe(({ id, dateRange }) => {
       if (id) {
         this.getChartStatusByIdDocument(id, dateRange);

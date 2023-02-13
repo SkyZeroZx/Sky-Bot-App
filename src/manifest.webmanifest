@@ -47,12 +47,6 @@
       "purpose": "maskable any"
     },
     {
-      "src": "/assets/icons/icon-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
       "src": "/assets/icons/icon-384x384.png",
       "sizes": "384x384",
       "type": "image/png",
@@ -68,42 +62,25 @@
   "screenshots": [
     {
       "src": "assets/screenshots/screenshot1.png",
-      "sizes": "388x851",
+      "sizes": "387x844",
       "type": "image/png"
     },
     {
       "src": "assets/screenshots/screenshot2.png",
-      "sizes": "388x851",
+      "sizes": "387x844",
       "type": "image/png"
     },
     {
       "src": "assets/screenshots/screenshot3.png",
-      "sizes": "388x851",
-      "type": "image/png"
-    },
-    {
-      "src": "assets/screenshots/screenshot4.png",
-      "sizes": "388x851",
+      "sizes": "387x844",
       "type": "image/png"
     }
   ],
   "shortcuts": [
     {
-      "name": "Asistencia",
-      "short_name": "Asistencia",
-      "url": "/#/attendance",
-      "description": "Puede marcar su asistencia diaria",
-      "icons": [
-        {
-          "src": "/assets/shortcuts/attendance/attendance-128x128.png",
-          "sizes": "128x128"
-        }
-      ]
-    },
-    {
       "name": "Mi Perfil",
       "short_name": "Perfil",
-      "url": "/commom/user-profile",
+      "url": "/common/user-profile",
       "description": "Puede actualizar sus datos de perfil",
       "icons": [
         {
@@ -113,13 +90,13 @@
       ]
     },
     {
-      "name": "Contactos",
-      "short_name": "Contactos",
-      "url": "/#/contacts",
-      "description": "Puede ver sus contactos disponibles",
+      "name": "Tramites",
+      "short_name": "Mis tramites",
+      "url": "/student/student-document",
+      "description": "Puede ver sus tramites",
       "icons": [
         {
-          "src": "assets/shortcuts/contacts/contacts-128x128.png",
+          "src": "assets/shortcuts/documents/documents-128x128.png",
           "sizes": "128x128"
         }
       ]

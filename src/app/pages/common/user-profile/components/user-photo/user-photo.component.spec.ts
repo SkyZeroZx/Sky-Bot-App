@@ -1,29 +1,44 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SwalPortalTargets, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { UserService } from '../../../../services/users/user.service';
 import { UserPhotoComponent } from './user-photo.component';
-import * as helper from '../../../../common/helpers/helper';
 import { of, throwError } from 'rxjs';
+import * as helper from '@core/helpers/helper';
+import { auth0Config } from '@core/config';
+import { AuthModule } from '@auth0/auth0-angular';
+import { UserService } from '../../../../../core/services';
+
 fdescribe('UserPhotoComponent', () => {
   let component: UserPhotoComponent;
   let fixture: ComponentFixture<UserPhotoComponent>;
-  let userService: UserService;
   let toastrService: ToastrService;
+  let userService: UserService;
+  let mockFile: File = null;
+  let mockEventFile: any = {
+    target: {
+      files: [mockFile],
+    },
+  };
+  const previewFile: helper.PreviewFile = {
+    result: 'awesome_result',
+    isDoc: false,
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UserPhotoComponent],
       imports: [
         HttpClientTestingModule,
-        BrowserAnimationsModule,
+        NoopAnimationsModule,
         RouterTestingModule,
+        NgOptimizedImage,
         CommonModule,
+        AuthModule.forRoot(auth0Config),
         ToastrModule.forRoot(),
         ModalModule.forRoot(),
         SweetAlert2Module.forRoot(),
@@ -39,7 +54,7 @@ fdescribe('UserPhotoComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UserPhotoComponent);
-    userService = TestBed.inject(UserService);
+    userService  = TestBed.inject(UserService);
     toastrService = TestBed.inject(ToastrService);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -49,35 +64,26 @@ fdescribe('UserPhotoComponent', () => {
   it('UserPhotoComponent create', () => {
     expect(component).toBeTruthy();
   });
-  let mockFile: File = null;
-  let mockEventFile: any = {
-    target: {
-      files: [mockFile],
-    },
-  };
-
 
   it('Validate userAvatarSelected OK', async () => {
-    const funPreviewUrlFile = jasmine
-      .createSpy('startAuthentication')
-      .and.returnValue(Promise.resolve('Base64Mock'));
-    spyOnProperty(helper, 'previewUrlFile', 'get').and.returnValue(funPreviewUrlFile);
+    const spyHelperPreview = spyOn(helper, 'previewUrlFile').and.returnValue(
+      Promise.resolve(previewFile),
+    );
+    const spySwalFire = spyOn(component.swalUploadPhoto, 'fire');
     await component.userAvatarSelected(mockEventFile);
-    expect(component.swalPhotoUser).toEqual('Base64Mock');
-    expect(component.fileUserAvatar).toEqual(mockFile);
-    expect(funPreviewUrlFile).toHaveBeenCalled();
+    expect(component.fileUserAvatar).toEqual(mockEventFile.target.files[0]);
+    expect(spyHelperPreview).toHaveBeenCalled();
+    expect(spySwalFire).toHaveBeenCalled();
   });
 
-  it('Validate userAvatarSelected Error', async () => {
-    const funPreviewUrlFile = jasmine
-      .createSpy('startAuthentication')
-      .and.returnValue(Promise.reject(new Error('Error')));
-    spyOnProperty(helper, 'previewUrlFile', 'get').and.returnValue(funPreviewUrlFile);
-    const spyToastService = spyOn(toastrService, 'error').and.callThrough();
+  it('validate certificateSelected', async () => {
+    const spyHelperPreview = spyOn(helper, 'previewUrlFile').and.returnValue(
+      Promise.reject(new Error()),
+    );
+    const spyToastError = spyOn(toastrService, 'error');
     await component.userAvatarSelected(mockEventFile);
-
-    expect(funPreviewUrlFile).toHaveBeenCalled();
-    expect(spyToastService).toHaveBeenCalled();
+    expect(spyToastError).toHaveBeenCalled();
+    expect(spyHelperPreview).toHaveBeenCalled();
   });
 
   it('Validate uploadPhoto OK', () => {
@@ -85,15 +91,5 @@ fdescribe('UserPhotoComponent', () => {
     component.uploadPhoto();
     expect(spyUserService).toHaveBeenCalled();
     expect(component.inputUserPhoto).toEqual(component.swalPhotoUser);
-  });
-
-  it('Validate uploadPhoto ERROR', () => {
-    const spyUserService = spyOn(userService, 'uploadPhoto').and.returnValue(
-      throwError(() => new Error('Upload photo')),
-    );
-    const spyToastService = spyOn(toastrService, 'error').and.callThrough();
-    component.uploadPhoto();
-    expect(spyUserService).toHaveBeenCalled();
-    expect(spyToastService).toHaveBeenCalled();
   });
 });

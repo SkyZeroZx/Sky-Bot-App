@@ -1,4 +1,4 @@
-import { User } from '@core/interfaces';
+import { Pagination, User } from '@core/interfaces';
 
 export class ManageUsersMock {
   public static readonly userMock: User = {
@@ -16,7 +16,7 @@ export class ManageUsersMock {
     phone: null,
   };
 
-  public static readonly listUsersMock: User[] = [
+  public static readonly listUser: User[] = [
     {
       id: 1,
       username: 'skyzero',
@@ -46,4 +46,17 @@ export class ManageUsersMock {
       phone: null,
     },
   ];
+
+  static readonly usersPagination: Pagination<User[]> = {
+    data: this.listUser,
+    meta: {
+      page: 1,
+      take: 25,
+      itemCount: 10,
+      pageCount: 10,
+      hasPreviousPage: false,
+      hasNextPage: true,
+      search: null,
+    },
+  };
 }

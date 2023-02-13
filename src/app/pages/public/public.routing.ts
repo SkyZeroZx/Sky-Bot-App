@@ -1,4 +1,5 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 export const publicRoutes: Routes = [
   {
@@ -6,3 +7,9 @@ export const publicRoutes: Routes = [
     loadChildren: () => import('./landing/landing.module').then((m) => m.LandingModule),
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forChild(publicRoutes)],
+  exports: [RouterModule],
+})
+export class PublicRoutingModule {}

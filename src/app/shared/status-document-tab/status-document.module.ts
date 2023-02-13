@@ -12,6 +12,8 @@ import {
 } from './components';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { PreviewFileModule } from '../preview-file/preview-file.module';
 
 @NgModule({
   imports: [
@@ -21,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SweetAlert2Module,
     NgOptimizedImage,
     ModalModule,
+    PreviewFileModule,
+    NgxDocViewerModule,
     ReactiveFormsModule,
     FormsModule,
   ],

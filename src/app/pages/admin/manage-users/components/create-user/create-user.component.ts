@@ -102,9 +102,6 @@ export class CreateUserComponent implements AfterViewInit, OnInit {
         this.createUserForm.reset();
         this.update.emit();
       },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al crear al usuario');
-      },
     });
   }
 

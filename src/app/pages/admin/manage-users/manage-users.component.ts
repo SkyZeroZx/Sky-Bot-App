@@ -4,9 +4,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { QueryParamsPagination, User } from '@core/interfaces';
-
-import { ReporteService, UserService } from '@core/services';
-import { QUERY_PARAMS_PAGINATON } from '@core/constants/Constant';
+import { UserService } from '@core/services';
+import { QUERY_PARAMS_PAGINATON } from '@core/constants/general';
 
 @Component({
   selector: 'app-manage-users',
@@ -37,7 +36,6 @@ export class ManageUsersComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastrService: ToastrService,
-    private reporteService: ReporteService,
     private userService: UserService,
   ) {}
 
@@ -79,10 +77,14 @@ export class ManageUsersComponent implements OnInit {
     this.userService.getUsers(this.queryParams).subscribe({
       next: ({ data, meta }) => {
         this.listUsers = data;
+
+        // const listUserMock = data.map((user) => user.username);
+        // const blob = new Blob([listUserMock as any], { type: 'text/plain' });
+        // const anchor = document.createElement('a');
+        // anchor.download = 'some_file_name.txt';
+        // anchor.href = (window.webkitURL || window.URL).createObjectURL(blob);
+        // anchor.click();
         this.paginator.length = meta.itemCount;
-      },
-      error: (_err) => {
-        this.toastrService.error('Error al listar usuarios');
       },
     });
   }
@@ -90,7 +92,6 @@ export class ManageUsersComponent implements OnInit {
   onChangePage({ pageIndex, pageSize }: PageEvent) {
     this.queryParams.page = pageIndex + 1;
     this.queryParams.take = pageSize;
-
     this.getUsers();
   }
 
@@ -99,9 +100,6 @@ export class ManageUsersComponent implements OnInit {
       next: (_res) => {
         this.getUsers();
         this.toastrService.success('Se reseteo exitosamente la contraseña');
-      },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al resetear el usuario');
       },
     });
   }
@@ -112,9 +110,6 @@ export class ManageUsersComponent implements OnInit {
         this.getUsers();
         this.paginator.firstPage();
         this.toastrService.success('Se elimino exitosamente el usuario');
-      },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al eliminar el usuario');
       },
     });
   }

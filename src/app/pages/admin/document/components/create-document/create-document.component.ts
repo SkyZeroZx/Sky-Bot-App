@@ -52,9 +52,6 @@ export class CreateDocumentComponent implements OnInit, AfterViewInit {
         this.update.emit();
         this.toastrService.success('Se registro existosamente el documento');
       },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al registrar el documento');
-      },
     });
   }
 

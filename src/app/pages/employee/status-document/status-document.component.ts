@@ -4,8 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { QueryParamsPagination, StatusDocumentByStudent } from '@core/interfaces';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { StatusDocumentService } from '@core/services';
-import { ToastrService } from 'ngx-toastr';
-import { QUERY_PARAMS_PAGINATON } from '@core/constants/Constant';
+import { QUERY_PARAMS_PAGINATON } from '@core/constants/general';
 
 @Component({
   selector: 'app-status-document',
@@ -31,7 +30,6 @@ export class StatusDocumentComponent implements OnInit {
   constructor(
     private statusDocumentService: StatusDocumentService,
     private fb: FormBuilder,
-    private toastService: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -80,9 +78,6 @@ export class StatusDocumentComponent implements OnInit {
       next: ({ data, meta }) => {
         this.listStatusDocument = data;
         this.paginator.length = meta.itemCount;
-      },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al listar tramites');
       },
     });
   }

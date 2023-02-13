@@ -1,6 +1,6 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChildrenOutletContexts } from '@angular/router';
-import { slideInAnimation } from '../../core/animations/router-animations';
+import { slideInAnimation } from '@core/animations';
 
 @Component({
   selector: 'app-public-layout',
@@ -9,7 +9,7 @@ import { slideInAnimation } from '../../core/animations/router-animations';
   animations: [slideInAnimation],
 })
 export class PublicLayoutComponent {
-  constructor(private contexts: ChildrenOutletContexts, private renderer: Renderer2) {}
+  constructor(private contexts: ChildrenOutletContexts) {}
 
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];

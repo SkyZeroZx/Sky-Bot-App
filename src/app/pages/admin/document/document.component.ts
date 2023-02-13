@@ -59,9 +59,6 @@ export class DocumentComponent implements OnInit {
         this.toastService.success('Documento eliminado exitosamente');
         this.getDocuments();
       },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al eliminar el documento');
-      },
     });
   }
 

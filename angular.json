@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sky-krono-app": {
+    "sky-bot-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -28,8 +28,7 @@
               "src/assets",
               "src/manifest.webmanifest",
               "src/custom-service-worker.js",
-              "src/robots.txt",
-              "src/auth_config.json"
+              "src/robots.txt"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -41,7 +40,7 @@
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/ngx-spinner/animations/pacman.css"
             ],
-            "scripts": [],
+            "scripts": ["./node_modules/mammoth/mammoth.browser.min.js"],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
           },
@@ -98,14 +97,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sky-krono-app:build"
+            "browserTarget": "sky-bot-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sky-krono-app:build:production"
+              "browserTarget": "sky-bot-app:build:production"
             },
             "development": {
-              "browserTarget": "sky-krono-app:build:development"
+              "browserTarget": "sky-bot-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -113,20 +112,19 @@
         "serve-coverage": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "sky-krono-app:build:e2e"
+            "browserTarget": "sky-bot-app:build:e2e"
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sky-krono-app:build"
+            "browserTarget": "sky-bot-app:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
@@ -134,9 +132,15 @@
               "src/styles.scss"
             ],
             "codeCoverageExclude": [
-              "src/app/common/helpers/**",
-              "src/app/common/guards/**",
-              "src/app/common/pipes/**"
+              "src/app/core/helpers/**",
+              "src/app/core/guards/**",
+              "src/app/core/config/**",
+              "src/app/core/services/report/**",
+              "src/app/core/services/interceptor/**",
+              "src/app/core/pipes/**",
+              "src/assets/**",
+              "src/app/core/mocks/**",
+              "src/app/core/directives//**"
             ],
             "scripts": [],
             "assets": [
@@ -150,13 +154,13 @@
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "sky-krono-app:serve-coverage",
+            "devServerTarget": "sky-bot-app:serve-coverage",
             "watch": true,
             "headless": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sky-krono-app:serve-coverage:production"
+              "devServerTarget": "sky-bot-app:serve-coverage:production"
             }
           }
         },
@@ -164,13 +168,13 @@
           "builder": "@cypress/schematic:cypress",
           "options": {
             "browser": "chrome",
-            "devServerTarget": "sky-krono-app:serve-coverage",
+            "devServerTarget": "sky-bot-app:serve-coverage",
             "headless": true,
             "watch": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sky-krono-app:serve-coverage:production"
+              "devServerTarget": "sky-bot-app:serve-coverage:production"
             }
           }
         },
@@ -179,13 +183,13 @@
           "options": {
             "browser": "chrome",
             "configFile": "cypress.config.mobile.ts",
-            "devServerTarget": "sky-krono-app:serve-coverage",
+            "devServerTarget": "sky-bot-app:serve-coverage",
             "headless": true,
             "watch": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sky-krono-app:serve-coverage:production"
+              "devServerTarget": "sky-bot-app:serve-coverage:production"
             }
           }
         },
@@ -203,11 +207,11 @@
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "sky-krono-app:serve"
+            "devServerTarget": "sky-bot-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "sky-krono-app:serve:production"
+              "devServerTarget": "sky-bot-app:serve:production"
             }
           }
         },

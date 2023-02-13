@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
@@ -9,7 +9,7 @@ import { AuthService } from '@core/services';
   templateUrl: './loading-layout.component.html',
   styleUrls: ['./loading-layout.component.scss'],
 })
-export class LoadingLayoutComponent implements OnInit {
+export class LoadingLayoutComponent {
   options: AnimationOptions = {
     // path: '../assets/animations/loading.json',
     path: 'https://assets10.lottiefiles.com/packages/lf20_7GoiCvHm8v.json',
@@ -19,19 +19,13 @@ export class LoadingLayoutComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private ngZone: NgZone,
-    private router: Router,
-  ) {
-    console.log('Constructing loading layout component');
-  }
 
-  ngOnInit(): void {
-    console.log('OnInit called');
-  }
+    private router: Router,
+  ) {}
 
   onLoopComplete() {
     console.log('Event Complete animation lottie');
-    this.stop();
+    this.animationItem.stop();
     this.authService.getRoutesByRole().subscribe({
       next: ([{ path }]) => {
         this.router.navigateByUrl(path);
@@ -41,11 +35,5 @@ export class LoadingLayoutComponent implements OnInit {
 
   animationCreated(animationItem: AnimationItem): void {
     this.animationItem = animationItem;
-  }
-
-  stop(): void {
-    this.ngZone.runOutsideAngular(() => {
-      this.animationItem.stop();
-    });
   }
 }

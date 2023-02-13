@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { ThemeService } from '@core/services';
 import { environment } from '../environments/environment';
@@ -9,14 +9,20 @@ import { environment } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private swUpdate: SwUpdate,
     private themeService: ThemeService,
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.existUpdate();
-    // for fixed bug auth0 redirect initial in first login 
+    this.pingToServer();
+  }
+
+  pingToServer() {
+    // for fixed bug auth0 redirect initial in first login
     this.http.get(`${environment.API_URL}`).subscribe(console.log);
   }
 

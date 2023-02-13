@@ -21,7 +21,7 @@ import { DocumentService } from '@core/services';
 export class UpdateDocumentComponent implements OnInit, AfterViewInit {
   @Output() close = new EventEmitter();
   @Output() update = new EventEmitter();
-  @Input() inputDocument: IDocument;
+  @Input() document: IDocument;
   @ViewChild('modalUpdateDocument')
   readonly modalUpdateDocument: ModalDirective;
 
@@ -39,9 +39,9 @@ export class UpdateDocumentComponent implements OnInit, AfterViewInit {
 
   createFormUpdateDocument(): void {
     this.updateDocumentForm = this.fb.group({
-      idDocument: [this.inputDocument.idDocument],
-      name: [this.inputDocument.name, Validators.required],
-      requirements: [this.inputDocument.requirements, Validators.required],
+      idDocument: [this.document.idDocument],
+      name: [this.document.name, Validators.required],
+      requirements: [this.document.requirements, Validators.required],
     });
   }
 
@@ -54,9 +54,6 @@ export class UpdateDocumentComponent implements OnInit, AfterViewInit {
       next: (_res) => {
         this.update.emit();
         this.toastrService.success('Documento actualizado exitosamente');
-      },
-      error: (_err) => {
-        this.toastrService.error('Sucedio un error al actualizar el documento');
       },
     });
   }

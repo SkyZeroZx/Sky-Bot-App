@@ -59,11 +59,6 @@ export class CreateStatusComponent implements OnInit, AfterViewInit {
         this.createStatusForm.reset();
         this.toastService.success('Nuevo estado registrado exitosamente');
       },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al registar nuevo estado');
-      },
     });
   }
-
-
 }

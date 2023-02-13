@@ -35,9 +35,6 @@ export class ListStatusComponent {
         this.update.emit();
         this.toastService.success('Estado eliminado exitosamente');
       },
-      error: (_err) => {
-        this.toastService.error('Sucedio un error al eliminar el estado');
-      },
     });
   }
 }

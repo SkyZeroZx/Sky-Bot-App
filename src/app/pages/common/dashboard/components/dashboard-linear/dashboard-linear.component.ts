@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { labels, lineChartOptions } from '@core/config';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -9,7 +9,7 @@ import { StatusListChartReport } from '@core/interfaces';
   templateUrl: './dashboard-linear.component.html',
   styleUrls: ['./dashboard-linear.component.scss'],
 })
-export class DashboardLinearComponent {
+export class DashboardLinearComponent implements OnChanges {
   @Input()
   statusListChartReport: StatusListChartReport;
   lineChartType: ChartType = 'line';

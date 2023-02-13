@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { AuthService as Auth0Service } from '@auth0/auth0-angular';
 import { StatusDocument, Attachment, Certificate } from '@core/interfaces';
 import { take } from 'rxjs';
-import { IS_ADMINSITRATIVE_ROLE } from '@core/constants/Constant';
+import { IS_ADMINSITRATIVE_ROLE } from '@core/constants/general';
 import { ListCertificateComponent, ListStatusComponent } from './components';
 
 @Component({

@@ -52,7 +52,8 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let row" class="d-flex justify-content-center actions">
                                 <div class="p-2 align-self-center">
-                                    <i class="fa-solid fa-file-lines" [routerLink]="['/student-document', row.idStatusDocument]"></i>
+                                    <i class="fa-solid fa-file-lines"
+                                        [routerLink]="['/student/student-document', row.idStatusDocument]"></i>
                                 </div>
                             </td>
                         </ng-container>

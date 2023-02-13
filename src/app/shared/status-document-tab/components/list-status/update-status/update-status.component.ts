@@ -57,13 +57,10 @@ export class UpdateStatusComponent implements OnInit, AfterViewInit {
 
   updateStatus() {
     this.statusService.updateStatus(this.updateStatusForm.value).subscribe({
-      next: (res) => {
+      next: (_res) => {
         this.updateStatusForm.reset();
         this.update.emit();
         this.toastService.success('Se actualizo exitosamente el estado');
-      },
-      error: (err) => {
-        this.toastService.error('Sucedio un error al actualizar el estado');
       },
     });
   }
