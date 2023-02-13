@@ -136,7 +136,7 @@ jobs:
   #         path: cypress/screenshots/*
   sonarcloud:
     name: SonarCloud
-    needs: [build, unit-test, e2e-testing-desktop, e2e-testing-mobile]
+    needs: [build, unit-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
